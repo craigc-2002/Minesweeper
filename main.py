@@ -10,7 +10,8 @@ import minesweeper
 
 """
 TO DO:
-
+- Implement saving best times
+- Add varying difficulty
 """
 
 # ---Setup---
@@ -31,6 +32,7 @@ class Minesweeper:
         self.screen = pygame.display.set_mode((self.window_width, self.window_height))
         pygame.display.set_caption("Minesweeper")
         self.clock = pygame.time.Clock()
+        self.game_time = 0
 
         self.grid_size = (500, 500)
         self.game_grid = minesweeper.Grid(self, (10, 10), self.grid_size)
@@ -55,6 +57,7 @@ class Minesweeper:
 
     def game_loop(self):
         # ---Main Game Loop---
+        self.game_time = 0
         while True:
             # Check event queue
             for event in pygame.event.get():
@@ -77,12 +80,20 @@ class Minesweeper:
             grid = self.game_grid.draw()
             self.screen.blit(grid, self.grid_position)
 
-            flag_count = self.font.render(f"Flags: {self.game_grid.num_flags}/{self.game_grid.num_mines}",
+            flag_count = self.font.render(f"Mines: {self.game_grid.num_flags}/{self.game_grid.num_mines}",
                                           True, self.colours["text"])
             self.screen.blit(flag_count, (900, 360))
 
+            minutes = self.game_time // 60000
+            seconds = (self.game_time // 1000) - (minutes * 60)
+            timestring = f"{minutes}" if minutes > 9 else f"0{minutes}"
+            timestring = timestring + f":{seconds}" if seconds > 9 else timestring + f":0{seconds}"
+            timer = self.font.render(timestring, True, self.colours["text"])
+            self.screen.blit(timer, (1020, 45))
+
             pygame.display.flip()  # Display the screen updates
-            self.clock.tick(60)  # Advance the clock (limited to 60FPS)
+            frame_time = self.clock.tick(60)  # Advance the clock (limited to 60FPS)
+            self.game_time += frame_time
 
     def win(self):
         self.game_over(loss=False)
@@ -120,6 +131,13 @@ class Minesweeper:
             end_message = self.title_font.render(ending_message, True, (255, 0, 0))
             self.screen.blit(end_message, ((self.window_width / 2) - (end_message.get_width() / 2),
                                            (self.window_height / 2) - (end_message.get_height() / 2)))
+
+            minutes = self.game_time // 60000
+            seconds = (self.game_time // 1000) - (minutes * 60)
+            timestring = f"{minutes}" if minutes > 9 else f"0{ minutes}"
+            timestring += f":{seconds}" if seconds > 9 else f":0{seconds}"
+            timer = self.font.render(timestring, True, self.colours["text"])
+            self.screen.blit(timer, (1020, 45))
 
             pygame.display.flip()  # Display the screen updates
             self.clock.tick(60)  # Advance the clock (limited to 60FPS)
