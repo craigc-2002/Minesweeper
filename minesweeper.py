@@ -161,7 +161,7 @@ class Grid:
         win = True
         for col in self.squares:
             for square in col:
-                if not (square.clicked or square.flag):
+                if not (square.clicked or square.mine):
                     win = False
         if win:
             self.game.win()

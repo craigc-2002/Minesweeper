@@ -11,7 +11,6 @@ import minesweeper
 """
 TO DO:
 - Make first click safe
-- Change win condition - all mines don't have to be flagged
 - Implement saving best times
 - Add varying difficulty
 """
