@@ -39,14 +39,13 @@ class GridSquare:
                 else:
                     self.flag = True
                     self.grid.add_flag()
-            elif button == 1:
-                if button == 1:
-                    self.clicked = True
+            elif button == 1 and not self.flag:
+                self.clicked = True
 
-                    if self.mine:
-                        self.game.mine_clicked()
-                    elif self.number == 0:
-                        self.grid.show_neighbours(self.grid_coords)
+                if self.mine:
+                    self.game.mine_clicked()
+                elif self.number == 0:
+                    self.grid.show_neighbours(self.grid_coords)
             self.grid.check_win()
 
     def draw(self, surf):
