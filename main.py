@@ -10,7 +10,6 @@ import minesweeper
 
 """
 TO DO:
-- Make first click safe
 - Implement saving best times
 - Add varying difficulty
 """
@@ -52,7 +51,8 @@ class Minesweeper:
                         "text": (0, 0, 0),
                         "text_shadow": (196, 196, 196),
                         "clicked_mine": (0, 0, 0),
-                        "background": (255, 253, 237)}
+                        "background": (255, 253, 237),
+                        "game_end_text": (255, 240, 0)}
 
         self.game_loop()
 
@@ -129,7 +129,7 @@ class Minesweeper:
             else:
                 ending_message = "YOU WON"
 
-            end_message = self.title_font.render(ending_message, True, (255, 0, 0))
+            end_message = self.title_font.render(ending_message, True, self.colours["game_end_text"])
             self.screen.blit(end_message, ((self.window_width / 2) - (end_message.get_width() / 2),
                                            (self.window_height / 2) - (end_message.get_height() / 2)))
 

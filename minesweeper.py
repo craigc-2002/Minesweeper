@@ -86,6 +86,7 @@ class Grid:
         self.size = size
         self.num_mines = num_mines
         self.num_flags = 0
+        self.clicked = False
 
         self.squares = []
         self.square_size = (self.size[0] / self.grid_dims[0], self.size[1] / self.grid_dims[1])
@@ -100,21 +101,23 @@ class Grid:
 
             self.squares.append(col)
 
-        self.assign_mines()
+    def assign_mines(self, clicked_square: tuple):
+        mines_assigned = 0
+        while mines_assigned < self.num_mines:
+            random_coords = (random.randint(0, self.grid_dims[0]-1), random.randint(0, self.grid_dims[1]-1))
+            if clicked_square[0] == random_coords[0] and clicked_square[1] == random_coords[1]:
+                square_clicked = True
+            else:
+                square_clicked = False
+
+            new_mine = self.squares[random_coords[0]][random_coords[1]]
+            if new_mine.mine is False and square_clicked is False:
+                new_mine.set_mine()
+                mines_assigned += 1
 
         for row in self.squares:
             for square in row:
                 square.numbers()
-
-    def assign_mines(self):
-        mines_assigned = 0
-        while mines_assigned < self.num_mines:
-            random_coords = (random.randint(0, self.grid_dims[0]-1), random.randint(0, self.grid_dims[1]-1))
-
-            new_mine = self.squares[random_coords[0]][random_coords[1]]
-            if new_mine.mine is False:
-                new_mine.set_mine()
-                mines_assigned += 1
 
     def get_surrounding_mines(self, grid_coords):
         num_surrounding_mines = 0
@@ -140,6 +143,9 @@ class Grid:
     def click(self, location: tuple, button):
         square_clicked_x = int(location[0] // self.square_size[0])
         square_clicked_y = int(location[1] // self.square_size[1])
+        if not self.clicked:
+            self.clicked = True
+            self.assign_mines((square_clicked_x, square_clicked_y))
         self.squares[square_clicked_x][square_clicked_y].click(button)
 
     def show_mines(self):
