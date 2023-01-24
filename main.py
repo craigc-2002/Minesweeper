@@ -10,6 +10,8 @@ import minesweeper
 
 """
 TO DO:
+- Make first click safe
+- Change win condition - all mines don't have to be flagged
 - Implement saving best times
 - Add varying difficulty
 """
@@ -80,7 +82,7 @@ class Minesweeper:
             grid = self.game_grid.draw()
             self.screen.blit(grid, self.grid_position)
 
-            flag_count = self.font.render(f"Mines: {self.game_grid.num_flags}/{self.game_grid.num_mines}",
+            flag_count = self.font.render(f"Mines: {self.game_grid.num_mines-self.game_grid.num_flags}/{self.game_grid.num_mines}",
                                           True, self.colours["text"])
             self.screen.blit(flag_count, (900, 360))
 

@@ -37,9 +37,8 @@ class GridSquare:
                     self.flag = False
                     self.grid.remove_flag()
                 else:
-                    if self.grid.flagable():
-                        self.flag = True
-                        self.grid.add_flag()
+                    self.flag = True
+                    self.grid.add_flag()
             elif button == 1:
                 if button == 1:
                     self.clicked = True
@@ -55,7 +54,7 @@ class GridSquare:
                           (self.grid_coords[1] * self.size[1]))
 
         colour = self.game.colours["unclicked_square"]
-        if  self.number == 0 and self.clicked:
+        if self.number == 0 and self.clicked:
             colour = self.game.colours["zero_square"]
         if self.flag and not self.clicked:
             colour = self.game.colours["flagged_square"]
@@ -167,9 +166,6 @@ class Grid:
                     win = False
         if win:
             self.game.win()
-
-    def flagable(self):
-        return self.num_flags < self.num_mines
 
     def add_flag(self):
         self.num_flags += 1
