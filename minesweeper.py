@@ -133,6 +133,7 @@ class Grid:
 
     def draw(self):
         grid_surf = pygame.Surface(self.size)
+        grid_surf.fill((255,255,255))
 
         for row in self.squares:
             for square in row:

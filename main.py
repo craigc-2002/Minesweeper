@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Minesweeper clone
 
@@ -35,7 +36,7 @@ class Minesweeper:
         self.game_time = 0
 
         self.grid_size = (500, 500)
-        self.game_grid = minesweeper.Grid(self, (10, 10), self.grid_size)
+        self.game_grid = minesweeper.Grid(self, (9, 9), self.grid_size)
         self.grid_position = (390, 130)
         # print(self.game_grid)
 
@@ -144,7 +145,7 @@ class Minesweeper:
             self.clock.tick(60)  # Advance the clock (limited to 60FPS)
 
     def restart(self):
-        self.game_grid = minesweeper.Grid(self, (10, 10), self.grid_size)
+        self.game_grid = minesweeper.Grid(self, (9, 9), self.grid_size)
         self.game_loop()
 
     def mouse_click(self, event):
